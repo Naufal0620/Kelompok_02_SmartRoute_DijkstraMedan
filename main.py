@@ -17,7 +17,6 @@ from graph_data import GRAPH, NODE_NAMES, POSITIONS
 from dijkstra import dijkstra
 
 # Konfigurasi penempatan label nama lokasi (dx, dy, horizontal_alignment, vertical_alignment)
-# Ditempatkan langsung menempel pada simpul di ruang kosong terdekat
 NODE_LABEL_CONFIG = {
     "V1":  (0.0, 0.48, 'center', 'bottom'),     # Marelan: Di atas
     "V2":  (-0.45, 0.42, 'right', 'bottom'),    # Lap. Merdeka: Di kiri-atas
@@ -32,7 +31,7 @@ NODE_LABEL_CONFIG = {
     "V9":  (0.0, -0.48, 'center', 'top'),       # Terminal Amplas: Di bawah
 }
 
-# Orientasi kelengkungan sisi jalur jauh (rad) agar melengkung di luar area pusat
+# Orientasi kelengkungan sisi jalur jauh (rad)
 CURVED_EDGES = {
     ("V1", "V10"): 0.30,
     ("V10", "V1"): -0.30,
@@ -120,12 +119,15 @@ def display_route_summary(start_node, end_node, path, total_dist, logs):
     
     # Rincian Segmen Jarak
     print(" Rincian Segmen Perjalanan:")
-    accumulated = 0.0
-    for i in range(len(path) - 1):
-        u, v = path[i], path[i+1]
-        weight = GRAPH[u][v]
-        accumulated = round(accumulated + weight, 2)
-        print(f"  {i+1}. [{u}] {NODE_NAMES[u]:<23s} ➔ [{v}] {NODE_NAMES[v]:<23s} : +{weight:.1f} km (Kumulatif: {accumulated:.1f} km)")
+    if len(path) == 1:
+        print(f"  1. [{path[0]}] {NODE_NAMES[path[0]]} (Titik Awal = Titik Tujuan) : 0.0 km")
+    else:
+        accumulated = 0.0
+        for i in range(len(path) - 1):
+            u, v = path[i], path[i+1]
+            weight = GRAPH[u][v]
+            accumulated = round(accumulated + weight, 2)
+            print(f"  {i+1}. [{u}] {NODE_NAMES[u]:<23s} ➔ [{v}] {NODE_NAMES[v]:<23s} : +{weight:.1f} km (Kumulatif: {accumulated:.1f} km)")
     
     print("─" * 75)
     print(f" TOTAL JARAK TERPENDEK : {total_dist:.1f} km")
@@ -229,7 +231,10 @@ def visualize_graph(path, total_dist, start_node="V1", end_node="V11", save_path
     for n in G.nodes():
         x, y = pos[n]
         if n in path:
-            if n == path[0]:
+            if n == path[0] and n == path[-1]:
+                bg_col = "#38A169" # Start = Goal (Hijau)
+                border_col = "#22543D"
+            elif n == path[0]:
                 bg_col = "#38A169" # Titik Awal (Hijau)
                 border_col = "#22543D"
             elif n == path[-1]:
@@ -290,15 +295,20 @@ def visualize_graph(path, total_dist, start_node="V1", end_node="V11", save_path
         "Rute Terpilih (Shortest Path):"
     ]
     
-    for i in range(len(path) - 1):
-        u, v = path[i], path[i+1]
-        w = GRAPH[u][v]
-        info_lines.append(f" {i+1}. [{u}] -> [{v}] ({w:.1f} km)")
+    if len(path) == 1:
+        info_lines.append(f" 1. [{path[0]}] {NODE_NAMES.get(path[0], path[0])} (0.0 km)")
+    else:
+        for i in range(len(path) - 1):
+            u, v = path[i], path[i+1]
+            w = GRAPH[u][v]
+            info_lines.append(f" {i+1}. [{u}] -> [{v}] ({w:.1f} km)")
         
     info_lines.append("--------------------------------")
     info_lines.append("LEGENDA SIMPUL (V):")
     for n in sorted(NODE_NAMES.keys(), key=lambda x: int(x[1:])):
-        if n == start_node:
+        if n == start_node and n == end_node:
+            tag = "[START/GOAL]"
+        elif n == start_node:
             tag = "[START]"
         elif n == end_node:
             tag = "[GOAL]"

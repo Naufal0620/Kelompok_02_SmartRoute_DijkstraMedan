@@ -13,9 +13,6 @@ __pycache__/
 *.pdf
 Panduan_Khusus_Programmer_A1.docx
 
-# Generated runtime outputs
-*.png
-
 # Operating System files
 .DS_Store
 Thumbs.db

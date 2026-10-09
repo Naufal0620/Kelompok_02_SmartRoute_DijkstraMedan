@@ -12,11 +12,12 @@ Program ini mengimplementasikan konsep **Teori Graf Berbobot** dan **Algoritma D
 ---
 
 ## 📂 Struktur Berkas
-- `main.py`: Program antarmuka Command Line Interface (CLI) interaktif untuk memilih titik awal & tujuan, melihat rute optimal, log iterasi matematis, dan opsi simpan visualisasi graf.
+- `main.py`: Program antarmuka Command Line Interface (CLI) interaktif untuk memilih titik awal & tujuan, melihat rute optimal, log iterasi matematis, dan membangkitkan visualisasi grafik rute.
 - `dijkstra.py`: Modul inti algoritma Dijkstra menggunakan *Priority Queue (Min-Heap)*, relaksasi sisi, dan pencatatan *predecessor*.
 - `graph_data.py`: Dataset graf Kota Medan ($V1 - V11$, 19 sisi) dalam bentuk *Adjacency List*.
 - `test_runner.py`: Skrip pengujian otomatis untuk memverifikasi 3 *Test Case* resmi (hasil validasi peran A2).
-- `requirements.txt`: Daftar library Python pendukung (NetworkX & Matplotlib).
+- `requirements.txt`: Daftar pustaka Python pendukung (NetworkX & Matplotlib).
+- `assets/`: Direktori penyimpanan tangkapan layar hasil visualisasi pengujian program.
 
 ---
 
@@ -25,11 +26,10 @@ Program ini mengimplementasikan konsep **Teori Graf Berbobot** dan **Algoritma D
 ### 1. Prasyarat
 Pastikan Python 3.8+ sudah terpasang di komputer Anda.
 
-### 2. Instalasi Library (Opsional untuk Visualisasi Graf Gambar)
+### 2. Instalasi Library (Untuk Visualisasi Graf Gambar)
 ```bash
 pip install -r requirements.txt
 ```
-*(Catatan: Program CLI inti dan algoritma berjalan mandiri tanpa perlu install library eksternal).*
 
 ### 3. Menjalankan Program Interaktif (Demo)
 ```bash
@@ -59,6 +59,19 @@ python3 test_runner.py
 | 1 | Kasus Normal | V1 (Marelan Square) ➔ V11 (Cambridge City Sq) | V1 ➔ V2 ➔ V5 ➔ V11 (16.8 km) | V1 ➔ V2 ➔ V5 ➔ V11 (16.8 km) | ✅ PASS |
 | 2 | Kasus Kompleks | V1 (Marelan Square) ➔ V8 (RSUP H. Adam Malik) | V1 ➔ V2 ➔ V5 ➔ V8 (28.9 km) | V1 ➔ V2 ➔ V5 ➔ V8 (28.9 km) | ✅ PASS |
 | 3 | Kasus Batas | V10 (Unimed Kampus 1) ➔ V10 (Unimed Kampus 1) | V10 (0.0 km) | V10 (0.0 km) | ✅ PASS |
+
+---
+
+### 🖼️ Tangkapan Layar Hasil Visualisasi Graf Pengujian
+
+#### 1. Test Case 1: Kasus Normal ($V_1 \rightarrow V_{11} = 16.8\text{ km}$)
+![Test Case 1 Normal](assets/test_case_1_normal.png)
+
+#### 2. Test Case 2: Kasus Kompleks / Terjauh ($V_1 \rightarrow V_8 = 28.9\text{ km}$)
+![Test Case 2 Kompleks](assets/test_case_2_kompleks.png)
+
+#### 3. Test Case 3: Kasus Batas Titik Sama ($V_{10} \rightarrow V_{10} = 0.0\text{ km}$)
+![Test Case 3 Batas](assets/test_case_3_batas.png)
 
 ---
 
