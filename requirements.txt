@@ -1,0 +1,6 @@
+# Dependensi Proyek Smart Route Optimization
+# Opsional: networkx dan matplotlib hanya diperlukan jika ingin membangkitkan visualisasi grafik rute .png
+# Program CLI utama (main.py) dan pengujian (test_runner.py) murni menggunakan Python Standard Library (heapq, sys).
+
+networkx>=3.0
+matplotlib>=3.7.0

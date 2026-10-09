@@ -1,0 +1,21 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Internal Documentation & Word Files (Excluded as requested)
+*.docx
+*.pdf
+Panduan_Khusus_Programmer_A1.docx
+
+# Generated runtime outputs
+*.png
+
+# Operating System files
+.DS_Store
+Thumbs.db
